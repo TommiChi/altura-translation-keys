@@ -26,8 +26,17 @@ const LOCALES = {
   'nl': 'nl-NL',
 } as const;
 
+const TIMES = {
+  'start': '00:00:01.000',
+  'end': '23:59:59.999',
+} as const;
+
 export const useSearchStore = defineStore('search', () => {
   const results = ref<ExtendedDirectusTranslation[]>([]);
+  const dateFilter = ref({
+    start: '',
+    end: '',
+  });
 
   async function apiSearch(target: string) {
     debounced(async () => {
@@ -38,9 +47,28 @@ export const useSearchStore = defineStore('search', () => {
     });
   }
 
+  function updateDateFilter(prop: keyof typeof dateFilter.value, value: string) {
+    const dateArray = value.split('-').reverse();
+
+    if (dateArray.length === 3 && dateArray[0].length === 4) {
+      dateFilter.value[prop] = `${dateArray.join('-')}T${TIMES[prop]}Z`;
+    } else {
+      if (dateFilter.value[prop] === '') return;
+      dateFilter.value[prop] = '';
+    }    
+  }
+
   const searchResults = computed(() => results.value.reduce((output, item) => {
     if (!item.updatedAt) {
       item.updatedAt = item.createdAt;
+    }
+
+    if (dateFilter.value.start && new Date(dateFilter.value.start) >= new Date(item.updatedAt)) {
+      return output;
+    }
+
+    if (dateFilter.value.end && new Date(dateFilter.value.end) <= new Date(item.updatedAt)) {
+      return output;
     }
 
     if (!item.key.includes(':')) {
@@ -55,5 +83,5 @@ export const useSearchStore = defineStore('search', () => {
     return output;
   }, []));
 
-  return { apiSearch, searchResults };
+  return { apiSearch, updateDateFilter, searchResults };
 });

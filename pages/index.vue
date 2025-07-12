@@ -1,12 +1,29 @@
 <script lang="ts" setup>
 	import Search from '~/components/search/Search.vue';
 	import ResultsTable from '~/components/results/ResultsTable.vue';
+	import DateFilter from '~/components/date-filter/DateFilter.vue';
+
+
 </script>
 
 <template>
 	<main>
-		<Search dataSource="https://directus.altura.io/items/translationKeys?fields=*,translations.*" />
-		<ResultsTable />
+		<section>
+			<Search dataSource="https://directus.altura.io/items/translationKeys?fields=*,translations.*" />
+			<div>
+				<span>Updated At:</span>
+				<span><DateFilter /></span>
+			</div>
+			<div>
+				<span>Page Size:</span>
+				<span></span>
+			</div>
+
+		</section>
+		<section>
+			<ResultsTable />
+		</section>
+		<section></section>
 	</main>
 </template>
 <style scoped>
