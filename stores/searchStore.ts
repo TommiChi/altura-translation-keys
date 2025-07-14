@@ -4,8 +4,8 @@ import { http } from '~/services/http';
 import type { DirectusTranslation } from '~/types';
 
 type ExtendedDirectusTranslation = DirectusTranslation & {
-  updatedAt?: string;
-  createdAt?: string;
+  updatedAt?: string | Date;
+  createdAt?: string | Date;
 };
 
 const debounced = (() => {
@@ -72,16 +72,16 @@ export const useSearchStore = defineStore('search', () => {
     }
   }
 
-  const searchResults = computed(() => results.value.reduce((output, item) => {
+  const searchResults = computed(() => results.value.reduce((output: ExtendedDirectusTranslation[], item: ExtendedDirectusTranslation) => {
     if (!item.updatedAt) {
       item.updatedAt = item.createdAt;
     }
 
-    if (dateFilter.value.start && new Date(dateFilter.value.start) >= new Date(item.updatedAt)) {
+    if (dateFilter.value.start && new Date(dateFilter.value.start) >= new Date(item.updatedAt || '')) {
       return output;
     }
 
-    if (dateFilter.value.end && new Date(dateFilter.value.end) <= new Date(item.updatedAt)) {
+    if (dateFilter.value.end && new Date(dateFilter.value.end) <= new Date(item.updatedAt || '')) {
       return output;
     }
 

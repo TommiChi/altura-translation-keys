@@ -11,7 +11,7 @@
     paginated?: boolean;
   }>();
 
-  const flags = {
+  const flags: Record<string, string> = {
     'en-GB': '🇬🇧',
     'fr-FR': '🇫🇷',
     'nl-NL': '🇳🇱',
@@ -52,7 +52,7 @@
         </tbody>
       </table>
     </section>
-    <Tooltip class="tooltip-container" :hover-element="activeCell" v-if="activeRow !== null">
+    <Tooltip class="tooltip-container" :hover-element="activeCell" v-if="activeCell !== null && activeRow !== null">
       <ul class="tooltip-content">
         <li class="tooltip-item" v-for="(item) in results[activeRow].translations" :key="item.id">
           <span>{{ flags[item.languages_code] }}</span>

@@ -55,9 +55,7 @@ h1 {
 
 main {
 	display: grid;
-	place-content: center;
 	min-height: 100vh;
-	max-width: 40rem;
 	gap: 0.5rem;
 	margin: 0 auto;
 	padding-block: 2.5rem;
