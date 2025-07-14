@@ -77,30 +77,45 @@ export const useSearchStore = defineStore('search', () => {
       item.updatedAt = item.createdAt;
     }
 
+    // skip anything that doesn't pass the date filter
     if (dateFilter.value.start && new Date(dateFilter.value.start) >= new Date(item.updatedAt || '')) {
       return output;
     }
 
+    // skip anything that doesn't pass the date filter
     if (dateFilter.value.end && new Date(dateFilter.value.end) <= new Date(item.updatedAt || '')) {
       return output;
     }
 
+    // push all default translations that don't have a language code suffixed in the key
     if (!item.key.includes(':')) {
       output.push(item);
     } else if (item.key.includes(':')) {
       const keyArray = item.key.split(':');
       const languageCode = keyArray.at(-1) as keyof typeof LOCALES;
+      /**
+       * transform the field to match the locale mapping (I have seen in the data that sometimes
+       * the language code of. the translations is still labelled as english).
+       * In a proper project I would do this sort of transformation, along with the duplicate key
+       * further down in a Backend for Frontend (BFF) layer
+       */
       item.translations.forEach(translation => {
         translation.languages_code = LOCALES[languageCode];
       });
+
+      // find if this key already exists in the output and only push if unique
       const duplicateKey = output[output.length - 1].translations.find(translation => translation.id === item.translations[0].id);
       !duplicateKey && output[output.length - 1].translations.push(...item.translations);
     }
+
     return output;
   }, []));
 
   const paginatedResults = computed(() => {
+    // Reset current page to 1 when results change
     currentPage.value = 1;
+    
+    // If resultsPerPage is not set or searchResults is empty, return an empty array
     if (!resultsPerPage.value || !searchResults.value.length) return [[]];
 
     const result = [];
