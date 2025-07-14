@@ -11,9 +11,9 @@ import "~/assets/tokens.css";
 		/>
 		<link rel="shortcut icon" href="logo_small.svg" />
 	</Head>
-	<main data-theme="light">
+	<div data-theme="light">
 		<nuxt-page />
-	</main>
+	</div>
 </template>
 
 <style>

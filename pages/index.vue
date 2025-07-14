@@ -2,7 +2,8 @@
 	import Search from '~/components/search/Search.vue';
 	import ResultsTable from '~/components/results/ResultsTable.vue';
 	import DateFilter from '~/components/date-filter/DateFilter.vue';
-
+	import PageFilter from '~/components/page-filter/PageFilter.vue';
+	import PageNavigation from '~/components/page-filter/PageNavigation.vue';
 
 </script>
 
@@ -16,12 +17,15 @@
 			</div>
 			<div>
 				<span>Page Size:</span>
-				<span></span>
+				<span><PageFilter :defaultPageSize="10" /></span>
 			</div>
 
 		</section>
 		<section>
-			<ResultsTable />
+			<ResultsTable :paginated="true" />
+		</section>
+		<section>
+			<PageNavigation />
 		</section>
 		<section></section>
 	</main>
@@ -40,6 +44,10 @@ main {
 	margin: 0 auto;
 	padding-block: 2.5rem;
 	line-height: 1.5;
+
+	& > section:nth-child(odd) {
+		padding: 0 10px;
+	}
 }
 
 .goose {

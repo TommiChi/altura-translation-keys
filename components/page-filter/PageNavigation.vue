@@ -17,15 +17,10 @@
 </script>
 
 <template>
-  <div>
-    <label>
-      From
-      <input type="text" placeholder="dd-mm-yyyy" @keyup="updateDateRange('start', $event)" />
-    </label>
-    <label>
-      To
-      <input type="text" placeholder="dd-mm-yyyy" @keyup="updateDateRange('end', $event)" />
-    </label>
+  <div class="nav-controls">
+    <span>Page {{ searchStore.currentPage }} of {{ searchStore.totalPages }}</span>
+    <button @click="searchStore.updateCurrentPage(-1)" :disabled="searchStore.currentPage <= 1">&laquo;</button>
+    <button @click="searchStore.updateCurrentPage(1)" :disabled="searchStore.currentPage >= searchStore.totalPages">&raquo;</button>
   </div>
 </template>
 

@@ -18,9 +18,15 @@
   });
 
   onMounted(() => {
+    if (!props.hoverElement) return;
+    const hoverElementRect = props.hoverElement.getBoundingClientRect();
+    const hoverElementBottom = hoverElementRect.bottom + window.scrollY;
+    const tooltipContainerBottom = document.documentElement.scrollHeight;
+    const tooltipBottom = hoverElementBottom + (tooltip.value?.getBoundingClientRect?.().height || 0);
     position.value = {
-      top: `${props.hoverElement.getBoundingClientRect().bottom + window.scrollY}px`,
-      left: `${props.hoverElement.getBoundingClientRect().left + window.scrollX}px`,
+      top: `${tooltipBottom > tooltipContainerBottom ? hoverElementBottom - (
+        tooltipBottom - tooltipContainerBottom) - 10 : hoverElementBottom - 5}px`,
+      left: `${hoverElementRect.left + window.scrollX}px`,
     };
   });
 </script>
@@ -36,8 +42,6 @@
     position: absolute;
     top: 0;
     left: 0;
-    border: solid 1px red;
-    padding: 10px;
     display:block;
   }
 </style>
