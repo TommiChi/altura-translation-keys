@@ -1,18 +1,12 @@
 <script setup lang="ts">
-  import { ref, computed, onMounted, defineProps } from 'vue';
-  import { useSearchStore } from '../../stores/searchStore'; // adjust path if needed
-
-  // import { TranslationKey, TranslationKeys } from '~/types';
+  import { defineProps } from 'vue';
+  import { useSearchStore } from '../../stores/searchStore';
 
   const searchStore = useSearchStore();
 
   const props = defineProps<{
     dataSource: string;
   }>();
-
-  onMounted(() => {
-    // Initialize or fetch data if needed
-  });
 
   async function search(event: KeyboardEvent) {
     const input = event.target as HTMLInputElement;
@@ -23,11 +17,28 @@
 
 <template>
   <section>
+    <img src="/goose.png" alt="logo" />
     <input type="text" placeholder="Search for translation keys..." @keyup="search" />
-    <!-- <div>{{ searchStore.searchResults }}</div> -->
   </section>
 </template>
 
 <style lang="scss" scoped>
+  input {
+    width: 90%;
+  }
+
+  img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+
+  section {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    height: 30px;
+    align-items: center;
+  }
 </style>
         

@@ -1,14 +1,7 @@
 <script setup lang="ts">
-  import { ref, computed, onMounted, defineProps } from 'vue';
   import { useSearchStore } from '../../stores/searchStore'; // adjust path if needed
 
-  // import { TranslationKey, TranslationKeys } from '~/types';
-
   const searchStore = useSearchStore();
-
-  onMounted(() => {
-    // Initialize or fetch data if needed
-  });
 
   async function updateDateRange(prop: 'start' | 'end', event: KeyboardEvent) {
     const input = event.target as HTMLInputElement;
@@ -30,4 +23,11 @@
 </template>
 
 <style lang="scss" scoped>
+  label:last-child {
+    margin-left: 10px;
+  }
+
+  input {
+    width: 110px;
+  }
 </style>

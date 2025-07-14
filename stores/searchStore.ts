@@ -42,6 +42,7 @@ export const useSearchStore = defineStore('search', () => {
   const resultsPerPage = ref<number | null>(null);
 
   async function apiSearch(target: string) {
+    // Use debounce function to avoid hammering the backend with too many requests.
     debounced(async () => {
       // Call the Nuxt server API route instead of the external backend directly to avoid CORS issues initially encountered when coding this assessment.
       const response: { data: DirectusTranslation[] } = await http(`/api/search?target=${encodeURIComponent(target)}`);

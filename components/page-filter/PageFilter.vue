@@ -1,8 +1,6 @@
 <script setup lang="ts">
-  import { ref, computed, onMounted, defineProps } from 'vue';
+  import { onMounted, defineProps } from 'vue';
   import { useSearchStore } from '../../stores/searchStore'; // adjust path if needed
-
-  // import { TranslationKey, TranslationKeys } from '~/types';
 
   const paginationSizes = [
     10, 20, 50, 100
@@ -14,10 +12,6 @@
 
   const searchStore = useSearchStore();
 
-  onMounted(() => {
-    // Initialize or fetch data if needed
-  });
-
   async function updatePaginationSize(itemsPerPage: keyof typeof paginationSizes) {
     searchStore.setPaginationSize(itemsPerPage as number);
   }
@@ -26,7 +20,7 @@
 </script>
 
 <template>
-  <div>
+  <div class="page-filter">
     <label v-for="size in paginationSizes" :key="size">
       <input type="radio" name="pageFilterRadio" @change="updatePaginationSize(size)" :checked="size === defaultPageSize" /> {{ size }} keys per page
     </label>
@@ -34,4 +28,16 @@
 </template>
 
 <style lang="scss" scoped>
+  .page-filter {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+  }
 </style>

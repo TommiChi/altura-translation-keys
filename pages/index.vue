@@ -9,8 +9,8 @@
 
 <template>
 	<main>
-		<section>
-			<Search dataSource="https://directus.altura.io/items/translationKeys?fields=*,translations.*" />
+		<section class="controls">
+			<Search class="search" dataSource="https://directus.altura.io/items/translationKeys?fields=*,translations.*" />
 			<div>
 				<span>Updated At:</span>
 				<span><DateFilter /></span>
@@ -24,13 +24,31 @@
 		<section>
 			<ResultsTable :paginated="true" />
 		</section>
-		<section>
+		<section class="page-nav">
 			<PageNavigation />
 		</section>
 		<section></section>
 	</main>
 </template>
 <style scoped>
+.controls {
+	display: flex;
+	flex-direction: row;
+	gap: 50px;
+
+	& > * {
+		width: 33%;
+	}
+}
+
+.search {
+	transform: translateY(75%);
+}
+
+.page-nav {
+	text-align: right;
+}
+
 h1 {
 	text-align: center;
 }

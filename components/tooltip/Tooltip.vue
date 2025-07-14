@@ -2,8 +2,6 @@
   import { ref, computed, onMounted, defineProps } from 'vue';
   import { useSearchStore } from '../../stores/searchStore'; // adjust path if needed
 
-  // import { TranslationKey, TranslationKeys } from '~/types';
-
   const props = defineProps<{
     hoverElement: HTMLElement;
   }>();
